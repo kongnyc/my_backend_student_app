@@ -10,8 +10,14 @@ const getStudentById = (id) => {
   const student = students.find((el) => el.id === id);
   return student;
 };
+const getStudentByIdGrades = (id) => {
+  const { students } = studentsData;
+  const student = students.find((el) => el.id === id);
+  return student;
+};
 
 module.exports = {
   getAllStudents,
   getStudentById,
+  getStudentByIdGrades
 };

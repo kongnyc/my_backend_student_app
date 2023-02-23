@@ -32,5 +32,20 @@ studentsController.get('/:id', (request, response) => {
     response.status(500).json({ error: err.message });
   }
 });
+studentsController.get('/:id/grades', (request, response) => {
+  try {
+    const { id } = request.params;
+    const student = getStudentById(id);
+    if (student) {
+      return response.status(200).json({ data: student.grades });
+    }
+    // return 404
+    response
+      .status(404)
+      .json({ error: `Could not find student with id ${id}` });
+  } catch (err) {
+    response.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = studentsController;
