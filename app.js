@@ -5,13 +5,14 @@
 // Import express library
 const express = require('express');
 const cors = require('cors');
+const db = require('./db/index');
 
 // Import OUR stuff (our files, our components)
 const studentsController = require('./controllers/studentsController');
 const studentsControllerV2 = require('./controllers/v2/studentsControllerV2');
 
 // Init express application
-const app = express();
+const app = express(); 
 
 // Set up middleware
 // Functions that will work with req, res before
@@ -28,6 +29,18 @@ app.use('/v2/students', studentsControllerV2);
 app.get('/', (request, response) => {
   response.status(200).json({ data: 'Service is running' });
 });
+
+//Todo remove the this test route
+app.get('/tests', async (request, response) => {
+  try {
+    const tests= await db.any('SELECT * FROM tests')
+    response.status(200).json({data:tests})
+    
+  } catch (error) {
+    response.status(500).json({error:error.message})
+    
+  }
+})
 
 
 
